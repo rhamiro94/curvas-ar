@@ -1,0 +1,35 @@
+name: Curvas diarias
+
+on:
+  schedule:
+    # Lunes a viernes 21:20 UTC = 18:20 Argentina (después del cierre)
+    - cron: "20 21 * * 1-5"
+  workflow_dispatch: {}   # botón "Run workflow" para correrlo a mano
+
+permissions:
+  contents: write
+
+jobs:
+  curvas:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+      - run: pip install -r requirements.txt
+      - name: Tests del motor
+        run: pytest -q
+      - name: Calcular curvas
+        env:
+          PPI_PUBLIC_KEY: ${{ secrets.PPI_PUBLIC_KEY }}
+          PPI_PRIVATE_KEY: ${{ secrets.PPI_PRIVATE_KEY }}
+        run: python main.py
+      - name: Guardar resultados en el repo
+        run: |
+          git config user.name "curvas-bot"
+          git config user.email "curvas-bot@users.noreply.github.com"
+          git add data docs
+          git diff --cached --quiet || git commit -m "Curvas $(date -u +%F)"
+          git push
