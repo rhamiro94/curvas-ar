@@ -1,0 +1,873 @@
+{
+ "generado": "2026-11-04T12:29:46",
+ "fecha_precios": "2026-11-03",
+ "dias_atras": 7,
+ "indices": {
+  "cer_t10": {
+   "fecha": "2026-10-22",
+   "valor": 858.09785540044,
+   "liquidacion": "2026-11-05"
+  }
+ },
+ "curvas": [
+  {
+   "id": "tasa-fija",
+   "titulo": "Tasa fija: LECAP y BONCAP",
+   "descripcion": "TEM contra días al vencimiento. Pago final fijo.",
+   "x": {
+    "campo": "dias",
+    "etiqueta": "Días al vencimiento",
+    "formato": "dias"
+   },
+   "y": {
+    "campo": "tem",
+    "etiqueta": "TEM",
+    "formato": "pct"
+   },
+   "y_ref": "tem_7d",
+   "campo_grupo": "tipo",
+   "grupos": [
+    {
+     "id": "LECAP",
+     "etiqueta": "LECAP"
+    },
+    {
+     "id": "BONCAP",
+     "etiqueta": "BONCAP"
+    }
+   ],
+   "ajuste_por_grupo": false,
+   "ajustes": [
+    {
+     "grupo": "todos",
+     "serie": "hoy",
+     "a": 0.01747080352471269,
+     "b": 0.0007903016128555636,
+     "r2": 0.7663347370944593,
+     "n": 7,
+     "x_min": 9.0,
+     "x_max": 238.0
+    },
+    {
+     "grupo": "todos",
+     "serie": "ref",
+     "a": 0.017768902220795194,
+     "b": 0.0006980225953133033,
+     "r2": 0.872197494459724,
+     "n": 7,
+     "x_min": 9.0,
+     "x_max": 238.0
+    }
+   ],
+   "columnas": [
+    {
+     "campo": "ticker",
+     "etiqueta": "Ticker",
+     "formato": "txt"
+    },
+    {
+     "campo": "tipo",
+     "etiqueta": "Tipo",
+     "formato": "txt"
+    },
+    {
+     "campo": "vto",
+     "etiqueta": "Vto",
+     "formato": "fecha"
+    },
+    {
+     "campo": "dias",
+     "etiqueta": "Días",
+     "formato": "dias"
+    },
+    {
+     "campo": "precio",
+     "etiqueta": "Precio",
+     "formato": "num3"
+    },
+    {
+     "campo": "pago_final",
+     "etiqueta": "Pago final",
+     "formato": "num3"
+    },
+    {
+     "campo": "tna",
+     "etiqueta": "TNA",
+     "formato": "pct"
+    },
+    {
+     "campo": "tea",
+     "etiqueta": "TEA",
+     "formato": "pct"
+    },
+    {
+     "campo": "tem",
+     "etiqueta": "TEM",
+     "formato": "pct"
+    },
+    {
+     "campo": "tem_7d",
+     "etiqueta": "TEM 7d",
+     "formato": "pct"
+    },
+    {
+     "campo": "delta_tem_pb",
+     "etiqueta": "Δ pb",
+     "formato": "pb"
+    }
+   ],
+   "filas": [
+    {
+     "ticker": "S13N6",
+     "tipo": "LECAP",
+     "fecha": "2026-11-03",
+     "precio": 109.013,
+     "pago_final": 109.65,
+     "vto": "2026-11-13",
+     "dias": 9,
+     "tna": 0.23863192205458006,
+     "tea": 0.26654180689838114,
+     "tem": 0.019885993504548338,
+     "dm": 7.105963617608479,
+     "fecha_7d": "2026-10-28",
+     "precio_7d": 108.607,
+     "tem_7d": 0.019569739904969685,
+     "delta_tem_pb": 3.1625359957865307
+    },
+    {
+     "ticker": "S30N6",
+     "tipo": "LECAP",
+     "fecha": "2026-11-03",
+     "precio": 127.769,
+     "pago_final": 129.888,
+     "vto": "2026-11-30",
+     "dias": 26,
+     "tna": 0.23314898253211602,
+     "tea": 0.25974959025181765,
+     "tem": 0.019429081877676335,
+     "dm": 20.63902239079334,
+     "fecha_7d": "2026-10-28",
+     "precio_7d": 127.241,
+     "tem_7d": 0.019763622373031087,
+     "delta_tem_pb": -3.345404953547515
+    },
+    {
+     "ticker": "T15E7",
+     "tipo": "BONCAP",
+     "fecha": "2026-11-03",
+     "precio": 153.6,
+     "pago_final": 161.104,
+     "vto": "2027-01-15",
+     "dias": 72,
+     "tna": 0.2442565334593816,
+     "tea": 0.2735443933263344,
+     "tem": 0.020354711121615132,
+     "dm": 56.53513169803625,
+     "fecha_7d": "2026-10-28",
+     "precio_7d": 152.92,
+     "tem_7d": 0.020538576411178733,
+     "delta_tem_pb": -1.838652895636006
+    },
+    {
+     "ticker": "S29E7",
+     "tipo": "LECAP",
+     "fecha": "2026-11-03",
+     "precio": 105.44,
+     "pago_final": 111.68,
+     "vto": "2027-01-29",
+     "dias": 86,
+     "tna": 0.24651990407888125,
+     "tea": 0.27637226811524007,
+     "tem": 0.02054332533990677,
+     "dm": 67.378461713989,
+     "fecha_7d": "2026-10-28",
+     "precio_7d": 104.961,
+     "tem_7d": 0.020726182871086074,
+     "delta_tem_pb": -1.8285753117930348
+    },
+    {
+     "ticker": "T30A7",
+     "tipo": "BONCAP",
+     "fecha": "2026-11-03",
+     "precio": 138.61,
+     "pago_final": 157.341,
+     "vto": "2027-04-30",
+     "dias": 177,
+     "tna": 0.2642469911459946,
+     "tea": 0.29872053146880595,
+     "tem": 0.02202058259549955,
+     "dm": 136.28798167979943,
+     "fecha_7d": "2026-10-28",
+     "precio_7d": 138.25,
+     "tem_7d": 0.021732511739173344,
+     "delta_tem_pb": 2.8807085632620577
+    },
+    {
+     "ticker": "T31Y7",
+     "tipo": "BONCAP",
+     "fecha": "2026-11-03",
+     "precio": 130.52,
+     "pago_final": 151.563,
+     "vto": "2027-05-31",
+     "dias": 208,
+     "tna": 0.26518743510677556,
+     "tea": 0.2999160936199545,
+     "tem": 0.02209895292556463,
+     "dm": 160.010327605661,
+     "fecha_7d": "2026-10-28",
+     "precio_7d": 130.15,
+     "tem_7d": 0.021884994604469243,
+     "delta_tem_pb": 2.139583210953866
+    },
+    {
+     "ticker": "T30J7",
+     "tipo": "BONCAP",
+     "fecha": "2026-11-03",
+     "precio": 131.8,
+     "pago_final": 156.037,
+     "vto": "2027-06-30",
+     "dias": 238,
+     "tna": 0.26169826971272503,
+     "tea": 0.2954854732611738,
+     "tem": 0.021808189142727086,
+     "dm": 183.71491221809978,
+     "fecha_7d": "2026-10-28",
+     "precio_7d": 131.84,
+     "tem_7d": 0.021227629919640556,
+     "delta_tem_pb": 5.805592230865297
+    }
+   ]
+  },
+  {
+   "id": "cer",
+   "titulo": "CER: LECER y BONCER cupón cero",
+   "descripcion": "TIR real (sobre CER) contra días al vencimiento. VR = 100 × CER T−10 / CER de emisión.",
+   "x": {
+    "campo": "dias",
+    "etiqueta": "Días al vencimiento",
+    "formato": "dias"
+   },
+   "y": {
+    "campo": "tir",
+    "etiqueta": "TIR real",
+    "formato": "pct"
+   },
+   "y_ref": "tir_7d",
+   "campo_grupo": "tipo",
+   "grupos": [
+    {
+     "id": "LECER",
+     "etiqueta": "LECER"
+    },
+    {
+     "id": "BONCER",
+     "etiqueta": "BONCER"
+    }
+   ],
+   "ajuste_por_grupo": false,
+   "ajustes": [
+    {
+     "grupo": "todos",
+     "serie": "hoy",
+     "a": -0.031165316588366312,
+     "b": 0.018442197752454516,
+     "r2": 0.35713535754815273,
+     "n": 15,
+     "x_min": 26.0,
+     "x_max": 875.0
+    },
+    {
+     "grupo": "todos",
+     "serie": "ref",
+     "a": -0.032907130914823904,
+     "b": 0.018177149201452813,
+     "r2": 0.4073424627645039,
+     "n": 15,
+     "x_min": 26.0,
+     "x_max": 875.0
+    }
+   ],
+   "columnas": [
+    {
+     "campo": "ticker",
+     "etiqueta": "Ticker",
+     "formato": "txt"
+    },
+    {
+     "campo": "vto",
+     "etiqueta": "Vto",
+     "formato": "fecha"
+    },
+    {
+     "campo": "dias",
+     "etiqueta": "Días",
+     "formato": "dias"
+    },
+    {
+     "campo": "precio",
+     "etiqueta": "Precio",
+     "formato": "num2"
+    },
+    {
+     "campo": "vr",
+     "etiqueta": "VR",
+     "formato": "num2"
+    },
+    {
+     "campo": "tir",
+     "etiqueta": "TIR real",
+     "formato": "pct"
+    },
+    {
+     "campo": "md",
+     "etiqueta": "MD",
+     "formato": "num2"
+    },
+    {
+     "campo": "tir_7d",
+     "etiqueta": "TIR 7d",
+     "formato": "pct"
+    },
+    {
+     "campo": "delta_pb",
+     "etiqueta": "Δ pb",
+     "formato": "pb"
+    }
+   ],
+   "filas": [
+    {
+     "ticker": "X30N6",
+     "tipo": "LECER",
+     "fecha": "2026-11-03",
+     "precio": 129.66,
+     "vto": "2026-11-30",
+     "cer_emision": 659.678896,
+     "fecha_cer": "2026-10-21",
+     "dias": 26,
+     "vr": 129.9991589442373,
+     "tir": 0.03735400904516051,
+     "md": 0.06866785696224913,
+     "fecha_7d": "2026-10-28",
+     "precio_7d": 129.25,
+     "tir_7d": 0.0246693668462159,
+     "delta_pb": 126.84642198944607
+    },
+    {
+     "ticker": "TZXD6",
+     "tipo": "BONCER",
+     "fecha": "2026-11-03",
+     "precio": 315.15,
+     "vto": "2026-12-15",
+     "cer_emision": 269.302519,
+     "fecha_cer": "2026-10-21",
+     "dias": 41,
+     "vr": 318.44374115662464,
+     "tir": 0.09697852760481385,
+     "md": 0.10239832804070534,
+     "fecha_7d": "2026-10-28",
+     "precio_7d": 313.65,
+     "tir_7d": 0.09363183707944756,
+     "delta_pb": 33.466905253662915
+    },
+    {
+     "ticker": "X29E7",
+     "tipo": "LECER",
+     "fecha": "2026-11-03",
+     "precio": 104.58,
+     "vto": "2027-01-29",
+     "cer_emision": 815.434511,
+     "fecha_cer": "2026-10-21",
+     "dias": 86,
+     "vr": 105.16810423941327,
+     "tir": 0.024085752824047013,
+     "md": 0.23007491092071344,
+     "fecha_7d": "2026-10-28",
+     "precio_7d": 104.13,
+     "tir_7d": 0.02521609045877038,
+     "delta_pb": -11.303376347233662
+    },
+    {
+     "ticker": "TZXM7",
+     "tipo": "BONCER",
+     "fecha": "2026-11-03",
+     "precio": 234.45,
+     "vto": "2027-03-31",
+     "cer_emision": 357.5665,
+     "fecha_cer": "2026-10-21",
+     "dias": 147,
+     "vr": 239.83706989682474,
+     "tir": 0.058028560664488804,
+     "md": 0.380651091095744,
+     "fecha_7d": "2026-10-28",
+     "precio_7d": 233.45,
+     "tir_7d": 0.05728236037314116,
+     "delta_pb": 7.462002913476429
+    },
+    {
+     "ticker": "TZXA7",
+     "tipo": "BONCER",
+     "fecha": "2026-11-03",
+     "precio": 129.45,
+     "vto": "2027-04-30",
+     "cer_emision": 651.898062,
+     "fecha_cer": "2026-10-21",
+     "dias": 177,
+     "vr": 131.5507847809233,
+     "tir": 0.033754159557029206,
+     "md": 0.46909751449717174,
+     "fecha_7d": "2026-10-28",
+     "precio_7d": 128.85,
+     "tir_7d": 0.03469715802940443,
+     "delta_pb": -9.429984723752227
+    },
+    {
+     "ticker": "TZXY7",
+     "tipo": "BONCER",
+     "fecha": "2026-11-03",
+     "precio": 127.55,
+     "vto": "2027-05-31",
+     "cer_emision": 659.678896,
+     "fecha_cer": "2026-10-21",
+     "dias": 208,
+     "vr": 129.9991589442373,
+     "tir": 0.03393884310655615,
+     "md": 0.5511573701849026,
+     "fecha_7d": "2026-10-28",
+     "precio_7d": 126.85,
+     "tir_7d": 0.03625442699639403,
+     "delta_pb": -23.1558388983788
+    },
+    {
+     "ticker": "TZX27",
+     "tipo": "BONCER",
+     "fecha": "2026-11-03",
+     "precio": 417.55,
+     "vto": "2027-06-30",
+     "cer_emision": 200.388015,
+     "fecha_cer": "2026-10-21",
+     "dias": 238,
+     "vr": 427.95823718929995,
+     "tir": 0.03848153333602444,
+     "md": 0.6278925272998193,
+     "fecha_7d": "2026-10-28",
+     "precio_7d": 414.2,
+     "tir_7d": 0.04438858365687026,
+     "delta_pb": -59.07050320845819
+    },
+    {
+     "ticker": "TZXS7",
+     "tipo": "BONCER",
+     "fecha": "2026-11-03",
+     "precio": 112.9,
+     "vto": "2027-09-30",
+     "cer_emision": 723.059981,
+     "fecha_cer": "2026-10-21",
+     "dias": 330,
+     "vr": 118.603855705939,
+     "tir": 0.05602713794441816,
+     "md": 0.8561423817203851,
+     "fecha_7d": "2026-10-28",
+     "precio_7d": 112.4,
+     "tir_7d": 0.05591184754846368,
+     "delta_pb": 1.1529039595448154
+    },
+    {
+     "ticker": "TZXO7",
+     "tipo": "BONCER",
+     "fecha": "2026-11-03",
+     "precio": 102.0,
+     "vto": "2027-10-29",
+     "cer_emision": 791.489705,
+     "fecha_cer": "2026-10-21",
+     "dias": 359,
+     "vr": 108.34973735162228,
+     "tir": 0.0633250298244119,
+     "md": 0.9249868255222329,
+     "fecha_7d": "2026-10-28",
+     "precio_7d": 101.9,
+     "tir_7d": 0.059428321714176,
+     "delta_pb": 38.967081102359025
+    },
+    {
+     "ticker": "TZXD7",
+     "tipo": "BONCER",
+     "fecha": "2026-11-03",
+     "precio": 290.95,
+     "vto": "2027-12-15",
+     "cer_emision": 269.302519,
+     "fecha_cer": "2026-10-21",
+     "dias": 406,
+     "vr": 318.44374115662464,
+     "tir": 0.084561754290577,
+     "md": 1.0256020579029854,
+     "fecha_7d": "2026-10-28",
+     "precio_7d": 290.7,
+     "tir_7d": 0.08061252485944803,
+     "delta_pb": 39.49229431128964
+    },
+    {
+     "ticker": "TZXM8",
+     "tipo": "BONCER",
+     "fecha": "2026-11-03",
+     "precio": 104.5,
+     "vto": "2028-03-31",
+     "cer_emision": 723.059981,
+     "fecha_cer": "2026-10-21",
+     "dias": 513,
+     "vr": 118.603855705939,
+     "tir": 0.09425896828970592,
+     "md": 1.2844120932831073,
+     "fecha_7d": "2026-10-28",
+     "precio_7d": 104.7,
+     "tir_7d": 0.08885791620296324,
+     "delta_pb": 54.01052086742686
+    },
+    {
+     "ticker": "TZX28",
+     "tipo": "BONCER",
+     "fecha": "2026-11-03",
+     "precio": 360.8,
+     "vto": "2028-06-30",
+     "cer_emision": 200.388015,
+     "fecha_cer": "2026-10-21",
+     "dias": 604,
+     "vr": 427.95823718929995,
+     "tir": 0.1086642416440955,
+     "md": 1.4926020506388527,
+     "fecha_7d": "2026-10-28",
+     "precio_7d": 363.8,
+     "tir_7d": 0.0996662935029442,
+     "delta_pb": 89.97948141151291
+    },
+    {
+     "ticker": "TZXS8",
+     "tipo": "BONCER",
+     "fecha": "2026-11-03",
+     "precio": 97.2,
+     "vto": "2028-09-29",
+     "cer_emision": 723.059981,
+     "fecha_cer": "2026-10-21",
+     "dias": 695,
+     "vr": 118.603855705939,
+     "tir": 0.11017803476428045,
+     "md": 1.71513895016432,
+     "fecha_7d": "2026-10-28",
+     "precio_7d": 98.1,
+     "tir_7d": 0.10178324444652231,
+     "delta_pb": 83.94790317758138
+    },
+    {
+     "ticker": "TZXD8",
+     "tipo": "BONCER",
+     "fecha": "2026-11-03",
+     "precio": 87.0,
+     "vto": "2028-12-15",
+     "cer_emision": 791.489705,
+     "fecha_cer": "2026-10-21",
+     "dias": 772,
+     "vr": 108.34973735162228,
+     "tir": 0.10933244061372349,
+     "md": 1.9066137577122972,
+     "fecha_7d": "2026-10-28",
+     "precio_7d": 87.4,
+     "tir_7d": 0.10417348560219675,
+     "delta_pb": 51.58955011526744
+    },
+    {
+     "ticker": "TZXM9",
+     "tipo": "BONCER",
+     "fecha": "2026-11-03",
+     "precio": 92.6,
+     "vto": "2029-03-28",
+     "cer_emision": 723.059981,
+     "fecha_cer": "2026-10-21",
+     "dias": 875,
+     "vr": 118.603855705939,
+     "tir": 0.1087605795525608,
+     "md": 2.1621081396490616,
+     "fecha_7d": "2026-10-28",
+     "precio_7d": 93.25,
+     "tir_7d": 0.10310881701821772,
+     "delta_pb": 56.517625343430744
+    }
+   ]
+  },
+  {
+   "id": "hard-dollar",
+   "titulo": "Hard dollar: Bonares y Globales",
+   "descripcion": "TIR contra duration modificada. Precios en USD MEP. Una tendencia por ley.",
+   "x": {
+    "campo": "md",
+    "etiqueta": "Duration modificada (años)",
+    "formato": "num2"
+   },
+   "y": {
+    "campo": "tir",
+    "etiqueta": "TIR",
+    "formato": "pct"
+   },
+   "y_ref": "tir_7d",
+   "campo_grupo": "ley",
+   "grupos": [
+    {
+     "id": "ARG",
+     "etiqueta": "Bonares (ley local)"
+    },
+    {
+     "id": "NY",
+     "etiqueta": "Globales (ley NY)"
+    }
+   ],
+   "ajuste_por_grupo": true,
+   "ajustes": [
+    {
+     "grupo": "ARG",
+     "serie": "hoy",
+     "a": 0.09077495167074448,
+     "b": 0.042721518149689025,
+     "r2": 0.3912997873552224,
+     "n": 9,
+     "x_min": 0.934933596457733,
+     "x_max": 4.8232584442891815
+    },
+    {
+     "grupo": "ARG",
+     "serie": "ref",
+     "a": 0.08098742787742869,
+     "b": 0.042557376904525906,
+     "r2": 0.5114707271004334,
+     "n": 9,
+     "x_min": 0.934933596457733,
+     "x_max": 4.8232584442891815
+    },
+    {
+     "grupo": "NY",
+     "serie": "hoy",
+     "a": 0.09286125838251229,
+     "b": 0.017546530235814838,
+     "r2": 0.6996666763556043,
+     "n": 5,
+     "x_min": 1.2446909764630014,
+     "x_max": 5.08350997802294
+    },
+    {
+     "grupo": "NY",
+     "serie": "ref",
+     "a": 0.07534022622960158,
+     "b": 0.025869117993889874,
+     "r2": 0.7655658600392607,
+     "n": 5,
+     "x_min": 1.2446909764630014,
+     "x_max": 5.08350997802294
+    }
+   ],
+   "columnas": [
+    {
+     "campo": "ticker",
+     "etiqueta": "Ticker",
+     "formato": "txt"
+    },
+    {
+     "campo": "ley",
+     "etiqueta": "Ley",
+     "formato": "txt"
+    },
+    {
+     "campo": "precio",
+     "etiqueta": "Precio",
+     "formato": "num2"
+    },
+    {
+     "campo": "tir",
+     "etiqueta": "TIR",
+     "formato": "pct"
+    },
+    {
+     "campo": "md",
+     "etiqueta": "MD",
+     "formato": "num2"
+    },
+    {
+     "campo": "tir_7d",
+     "etiqueta": "TIR 7d",
+     "formato": "pct"
+    },
+    {
+     "campo": "delta_pb",
+     "etiqueta": "Δ pb",
+     "formato": "pb"
+    }
+   ],
+   "filas": [
+    {
+     "ticker": "AO27D",
+     "ley": "ARG",
+     "fecha": "2026-11-03",
+     "precio": 103.35,
+     "tir": 0.026719960941546606,
+     "md": 0.934933596457733,
+     "fecha_7d": "2026-10-28",
+     "precio_7d": 103.2,
+     "tir_7d": 0.03291725357572062,
+     "delta_pb": -61.97292634174012
+    },
+    {
+     "ticker": "AL29D",
+     "ley": "ARG",
+     "fecha": "2026-11-03",
+     "precio": 53.0,
+     "tir": 0.10742681104494911,
+     "md": 1.2177929590285754,
+     "fecha_7d": "2026-10-28",
+     "precio_7d": 53.92,
+     "tir_7d": 0.0922651784796259,
+     "delta_pb": 151.61632565323214
+    },
+    {
+     "ticker": "GD29D",
+     "ley": "NY",
+     "fecha": "2026-11-03",
+     "precio": 54.03,
+     "tir": 0.09179322956437741,
+     "md": 1.2446909764630014,
+     "fecha_7d": "2026-10-28",
+     "precio_7d": 55.33,
+     "tir_7d": 0.0720505908329786,
+     "delta_pb": 197.4263873139881
+    },
+    {
+     "ticker": "AL30D",
+     "ley": "ARG",
+     "fecha": "2026-11-03",
+     "precio": 52.85,
+     "tir": 0.12731520285710796,
+     "md": 1.5668809592447395,
+     "fecha_7d": "2026-10-28",
+     "precio_7d": 54.05,
+     "tir_7d": 0.11205265519697061,
+     "delta_pb": 152.6254766013735
+    },
+    {
+     "ticker": "GD30D",
+     "ley": "NY",
+     "fecha": "2026-11-03",
+     "precio": 54.75,
+     "tir": 0.1051566511906169,
+     "md": 1.6214733544879358,
+     "fecha_7d": "2026-10-28",
+     "precio_7d": 55.42,
+     "tir_7d": 0.0967739428114548,
+     "delta_pb": 83.82708379162108
+    },
+    {
+     "ticker": "AO28D",
+     "ley": "ARG",
+     "fecha": "2026-11-03",
+     "precio": 87.0,
+     "tir": 0.14392842537327322,
+     "md": 1.6350504751969286,
+     "fecha_7d": "2026-10-28",
+     "precio_7d": 90.11,
+     "tir_7d": 0.12484012639753439,
+     "delta_pb": 190.88298975738826
+    },
+    {
+     "ticker": "AO29D",
+     "ley": "ARG",
+     "fecha": "2026-11-03",
+     "precio": 80.0,
+     "tir": 0.15284288854193917,
+     "md": 2.3463215508787987,
+     "fecha_7d": "2026-10-28",
+     "precio_7d": 83.26,
+     "tir_7d": 0.13760330108175245,
+     "delta_pb": 152.3958746018672
+    },
+    {
+     "ticker": "AN29D",
+     "ley": "ARG",
+     "fecha": "2026-11-03",
+     "precio": 83.25,
+     "tir": 0.15136748045968862,
+     "md": 2.3542199649485305,
+     "fecha_7d": "2026-10-28",
+     "precio_7d": 85.0,
+     "tir_7d": 0.14165744423551085,
+     "delta_pb": 97.10036224177765
+    },
+    {
+     "ticker": "AE38D",
+     "ley": "ARG",
+     "fecha": "2026-11-03",
+     "precio": 68.5,
+     "tir": 0.14619483006171163,
+     "md": 3.601630264717251,
+     "fecha_7d": "2026-10-28",
+     "precio_7d": 70.31,
+     "tir_7d": 0.13844383798772786,
+     "delta_pb": 77.50992073983775
+    },
+    {
+     "ticker": "GD38D",
+     "ley": "NY",
+     "fecha": "2026-11-03",
+     "precio": 74.35,
+     "tir": 0.12411810203286755,
+     "md": 3.825315233068449,
+     "fecha_7d": "2026-10-28",
+     "precio_7d": 76.2,
+     "tir_7d": 0.11728130269976733,
+     "delta_pb": 68.36799333100218
+    },
+    {
+     "ticker": "AL35D",
+     "ley": "ARG",
+     "fecha": "2026-11-03",
+     "precio": 65.55,
+     "tir": 0.13844535323481033,
+     "md": 4.505050780020537,
+     "fecha_7d": "2026-10-28",
+     "precio_7d": 67.53,
+     "tir_7d": 0.13143177915106097,
+     "delta_pb": 70.13574083749363
+    },
+    {
+     "ticker": "GD35D",
+     "ley": "NY",
+     "fecha": "2026-11-03",
+     "precio": 70.19,
+     "tir": 0.12345960978551307,
+     "md": 4.623159838637406,
+     "fecha_7d": "2026-10-28",
+     "precio_7d": 71.7,
+     "tir_7d": 0.11847899856405275,
+     "delta_pb": 49.80611221460318
+    },
+    {
+     "ticker": "AL41D",
+     "ley": "ARG",
+     "fecha": "2026-11-03",
+     "precio": 60.62,
+     "tir": 0.1277487958507818,
+     "md": 4.8232584442891815,
+     "fecha_7d": "2026-10-28",
+     "precio_7d": 62.37,
+     "tir_7d": 0.12151855285654001,
+     "delta_pb": 62.30242994241797
+    },
+    {
+     "ticker": "GD41D",
+     "ley": "NY",
+     "fecha": "2026-11-03",
+     "precio": 65.85,
+     "tir": 0.11103721631051833,
+     "md": 5.08350997802294,
+     "fecha_7d": "2026-10-28",
+     "precio_7d": 67.23,
+     "tir_7d": 0.10666012409354397,
+     "delta_pb": 43.77092216974354
+    }
+   ]
+  }
+ ]
+}
