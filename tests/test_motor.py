@@ -47,3 +47,22 @@ def test_liquidacion_saltea_fin_de_semana():
 
 def test_tir_sin_flujos_futuros():
     assert motor.tir(50, [(date(2020, 1, 1), 100)], LIQ) is None
+
+
+def test_ajuste_log_recupera_parametros():
+    import math
+    xs = [10, 30, 90, 180, 365]
+    ys = [0.02 + 0.003 * math.log(x) for x in xs]
+    f = motor.ajuste_log(xs, ys)
+    assert abs(f["a"] - 0.02) < 1e-9 and abs(f["b"] - 0.003) < 1e-9 and abs(f["r2"] - 1) < 1e-9
+
+
+def test_ajuste_log_pocos_puntos():
+    assert motor.ajuste_log([1, 2], [0.1, 0.2]) is None
+
+
+def test_cer_x30n6_vs_informe():
+    m = motor.metricas_cer(127.5, 659.678896, 843.486823, date(2026, 11, 30), LIQ)
+    assert m["dias"] == 55
+    assert abs(m["vr"] - 127.9) < 0.06
+    assert abs(m["tir"] - 0.0196) < 0.002

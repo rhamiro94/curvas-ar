@@ -4,6 +4,9 @@ Curvas soberanas argentinas calculadas todos los días hábiles:
 
 - **Hard dollar** (Bonares y Globales en USD MEP): TIR y duration modificada.
 - **LECAP y BONCAP**: TNA, TEA, TEM y días al vencimiento.
+- **CER cupón cero**: TIR real con CER de emisión y CER T-10 del BCRA.
+
+Cada curva tiene líneas de tendencia logarítmicas (y = a + b·ln(x)) de hoy y de hace 7 días.
 
 Cada curva se compara con el cierre de hace 7 días.
 
@@ -24,8 +27,11 @@ src/curvas/flujos.py     descarga y respaldo de flujos
 src/curvas/precios.py    login y precios de PPI
 src/curvas/motor.py      TIR, duration, TNA/TEA/TEM
 src/curvas/curvas.py     arma las tablas de cada curva
-src/curvas/graficos.py   gráficos PNG
-src/curvas/pagina.py     docs/index.html
+src/curvas/bcra.py       índice CER del BCRA
+src/curvas/export.py     datos de la terminal (docs/data/curvas.json) y tablas de control
+src/curvas/sheet.py      carga del Google Sheet
+src/curvas/universo.py   instrumentos de la pestaña "renta fija"
+docs/index.html, app.js, style.css   terminal web
 tests/test_motor.py      validación contra el informe BYMA/IAMC
 .github/workflows/diario.yml   corrida automática
 data/resultados/         CSV diarios (histórico)
@@ -43,7 +49,21 @@ pytest                    # valida el motor
 python main.py            # calcula y genera data/ y docs/
 ```
 
-Abrí `docs/index.html` en el navegador para ver el resultado.
+Para ver la terminal en tu compu:
+
+```bash
+cd docs
+python -m http.server
+```
+
+y abrí http://localhost:8000 (con doble clic sobre index.html no carga los datos).
+
+## Sheet de control
+
+Si hay credenciales de Google, cada corrida escribe en "IOL pro":
+- **renta fija** (columnas A:U): precios de hoy y de hace 7 días, vencimientos, montos, CER de emisión / VR de los DL. De la V en adelante es tuyo.
+- **indices**: CER T-10 de la liquidación del día.
+- **control curvas** y **control ajustes**: exactamente lo que muestra la terminal (tasas y parámetros a, b, R² de cada tendencia), para compararlo con tus cálculos.
 
 ## Automatización en GitHub
 

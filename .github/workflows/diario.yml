@@ -13,8 +13,8 @@ jobs:
   curvas:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-python@v5
+      - uses: actions/checkout@v5
+      - uses: actions/setup-python@v6
         with:
           python-version: "3.12"
           cache: pip
@@ -25,6 +25,7 @@ jobs:
         env:
           PPI_PUBLIC_KEY: ${{ secrets.PPI_PUBLIC_KEY }}
           PPI_PRIVATE_KEY: ${{ secrets.PPI_PRIVATE_KEY }}
+          GOOGLE_SA_JSON: ${{ secrets.GOOGLE_SA_JSON }}
         run: python main.py
       - name: Guardar resultados en el repo
         run: |
