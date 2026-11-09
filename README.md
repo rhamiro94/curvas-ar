@@ -6,6 +6,17 @@ Curvas soberanas argentinas calculadas todos los días hábiles:
 - **LECAP y BONCAP**: TNA, TEA, TEM y días al vencimiento.
 - **CER cupón cero**: TIR real con CER de emisión y CER T-10 del BCRA.
 
+Arriba, los indicadores: riesgo país (aproximación del EMBI con la curva del Tesoro de EE.UU.),
+TAMAR y A3500 (BCRA) y MEP implícito (AL30/AL30D). Además: inflación breakeven (tasa fija vs CER)
+y una calculadora de TIR a precio manual que usa el mismo motor (docs/calc.js).
+
+La terminal tiene tres pestañas:
+- **Curvas**: KPIs, tasa fija (TNA/TEA/TEM a elección), rendimiento en dólares de las letras según el MEP,
+  TAMAR (monto al vencimiento proyectado), CER, hard dollar con spread y colchón de precio hasta el 09/07/2027.
+- **Histórico**: A3500, MEP implícito, CER, TAMAR, Merval (pesos y USD) y retorno total de Bonares y Globales
+  desde 2025, y riesgo país desde 2024 (data/historico/ guarda la curva del Tesoro ya descargada).
+- **Calculadora**: TIR a precio manual o precio para una TIR objetivo.
+
 Cada curva tiene líneas de tendencia logarítmicas (y = a + b·ln(x)) de hoy y de hace 7 días.
 
 Cada curva se compara con el cierre de hace 7 días.
@@ -27,11 +38,14 @@ src/curvas/flujos.py     descarga y respaldo de flujos
 src/curvas/precios.py    login y precios de PPI
 src/curvas/motor.py      TIR, duration, TNA/TEA/TEM
 src/curvas/curvas.py     arma las tablas de cada curva
-src/curvas/bcra.py       índice CER del BCRA
+src/curvas/bcra.py       CER, TAMAR y A3500 del BCRA
+src/curvas/ust.py        curva del Tesoro de EE.UU. (treasury.gov)
+src/curvas/kpis.py       riesgo país, MEP, A3500 y TAMAR
+src/curvas/historico.py  series históricas y riesgo país diario
 src/curvas/export.py     datos de la terminal (docs/data/curvas.json) y tablas de control
 src/curvas/sheet.py      carga del Google Sheet
 src/curvas/universo.py   instrumentos de la pestaña "renta fija"
-docs/index.html, app.js, style.css   terminal web
+docs/index.html, app.js, calc.js, style.css   terminal web
 tests/test_motor.py      validación contra el informe BYMA/IAMC
 .github/workflows/diario.yml   corrida automática
 data/resultados/         CSV diarios (histórico)

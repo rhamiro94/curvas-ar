@@ -88,3 +88,65 @@ def ajuste_log(xs, ys):
     ss_tot = sum((p[1] - my) ** 2 for p in pares)
     ss_res = sum((p[1] - (a + b * p[0])) ** 2 for p in pares)
     return {"a": a, "b": b, "r2": 1 - ss_res / ss_tot if ss_tot else None, "n": n}
+
+
+def a_bey(tir_efectiva: float) -> float:
+    """Tasa efectiva anual -> rendimiento semestral equivalente (convención del Tesoro de EE.UU.)."""
+    return 2 * ((1 + tir_efectiva) ** 0.5 - 1)
+
+
+def spread_ust(tir: float, duration_macaulay: float, curva_ust) -> float:
+    """Spread en puntos básicos sobre el Tesoro de EE.UU. al plazo de la duration."""
+    from .ust import interpolar
+    return (a_bey(tir) - interpolar(curva_ust, duration_macaulay)) * 1e4
+
+
+def riesgo_pais(bonos) -> float | None:
+    """Promedio de spreads ponderado por valor de mercado. bonos: [(spread_pb, monto_emitido, precio)]."""
+    validos = [(s, m * p / 100) for s, m, p in bonos if s is not None and m and p]
+    total = sum(v for _, v in validos)
+    return sum(s * v for s, v in validos) / total if total else None
+
+
+def breakeven_mensual(tea_fija: float, tir_real: float) -> float:
+    """Inflación mensual implícita entre una tasa fija y una CER del mismo plazo."""
+    return ((1 + tea_fija) / (1 + tir_real)) ** (1 / 12) - 1
+
+
+def monto_tamar(emision: date, vto: date, margen: float, serie: dict, hoy: date, tasa_futura: float) -> float:
+    """Monto al vencimiento por VN 100 de un bono TAMAR capitalizable.
+    Capitaliza en cada mes (mismo día que el vencimiento) a (TAMAR promedio del período + margen) x días/365.
+    Días ya transcurridos: TAMAR publicada (BCRA). Días futuros: tasa_futura.
+    Validado contra el monto proyectado del informe BYMA/IAMC 05-Oct-26 (diferencias de 0,0% a 0,2%)."""
+    import calendar
+    cortes = [vto]
+    d = vto
+    while True:
+        y, m = (d.year - 1, 12) if d.month == 1 else (d.year, d.month - 1)
+        d = date(y, m, min(vto.day, calendar.monthrange(y, m)[1]))
+        if d <= emision:
+            break
+        cortes.append(d)
+    cortes = [emision] + sorted(cortes)
+    fechas = sorted(serie)
+    factor = 1.0
+    for a, b in zip(cortes, cortes[1:]):
+        conocidos = [serie[f] for f in fechas if a <= f < b and f <= hoy]
+        n_dias = (b - a).days
+        dias_futuros = max(0, (b - max(a, hoy + timedelta(days=1))).days) if b > hoy else 0
+        if conocidos and dias_futuros:
+            peso = (n_dias - dias_futuros) / n_dias
+            tasa = peso * (sum(conocidos) / len(conocidos)) + (1 - peso) * tasa_futura
+        elif conocidos:
+            tasa = sum(conocidos) / len(conocidos)
+        else:
+            tasa = tasa_futura
+        factor *= 1 + (tasa + margen) * n_dias / 365
+    return 100 * factor
+
+
+def metricas_tamar(precio: float, monto: float, vto: date, liq: date, tamar_hoy: float):
+    m = metricas_lecap(precio, monto, vto, liq)
+    if m:
+        m["margen_implicito"] = m["tna"] - tamar_hoy
+    return m

@@ -34,6 +34,7 @@ def _reintentar(fn, *args, intentos=4):
 class Precios:
     def __init__(self, ppi):
         self.ppi = ppi
+        self.volumenes = {}  # ticker -> volumen del día (PPI)
 
     def feriados(self, desde: date, hasta: date) -> set:
         try:
@@ -51,6 +52,10 @@ class Precios:
         time.sleep(PAUSA_PPI)
         if not d or not d.get("price"):
             return None, None
+        try:
+            self.volumenes[ticker] = float(d.get("volume") or 0)
+        except (TypeError, ValueError):
+            self.volumenes[ticker] = None
         f = pd.to_datetime(d.get("date")).date() if d.get("date") else date.today()
         return float(d["price"]), f
 
@@ -70,3 +75,19 @@ class Precios:
         if df.empty:
             return None, None
         return float(df.iloc[-1]["price"]), df.iloc[-1]["f"]
+
+    def historico(self, ticker: str, tipo: str, desde: date, hasta: date) -> dict:
+        """{fecha: precio de cierre} entre dos fechas."""
+        hist = _reintentar(self.ppi.marketdata.search, ticker, tipo, SETTLEMENT,
+                           datetime.combine(desde, datetime.min.time()),
+                           datetime.combine(hasta, datetime.max.time()))
+        time.sleep(PAUSA_PPI)
+        out = {}
+        for h in hist or []:
+            try:
+                p = float(h.get("price") or 0)
+                if p > 0:
+                    out[pd.to_datetime(h["date"]).date()] = p
+            except (TypeError, ValueError, KeyError):
+                continue
+        return out

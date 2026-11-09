@@ -16,12 +16,18 @@
         <span class="marca-nombre">Curvas Soberanas AR</span>
         <span class="marca-fecha" id="fecha">Cargando…</span>
       </div>
-      <nav class="nav" id="nav" aria-label="Curvas"></nav>
+      <nav class="tabs" aria-label="Secciones">
+        <a href="#curvas" data-vista="curvas" class="tab">Curvas</a>
+        <a href="#historico" data-vista="historico" class="tab">Histórico</a>
+        <a href="#calculadora" data-vista="calculadora" class="tab">Calculadora</a>
+      </nav>
     </div>
   </header>
 
   <main class="wrap">
-    <section class="resumen" id="resumen" aria-live="polite"></section>
+   <div id="vista-curvas" class="vista">
+    <section class="kpis" id="kpis" aria-label="Indicadores"></section>
+    <nav class="nav" id="nav" aria-label="Curvas"></nav>
 
     <div class="controles">
       <label><input type="checkbox" id="ver-ref" checked> Mostrar hace <span id="dias-atras">7</span> días</label>
@@ -30,12 +36,63 @@
 
     <div id="curvas"></div>
 
+    <section class="curva" id="breakeven" hidden>
+      <div class="curva-head"><h2>Inflación breakeven</h2><p>Inflación mensual implícita entre tasa fija y CER del mismo vencimiento: (1 + TEA fija) / (1 + TIR real), llevado a mes.</p></div>
+      <div class="curva-grid">
+        <div class="card"><div class="leyenda"><span><i class="sw" style="background:var(--s1)"></i>Pares del mismo vencimiento</span><span><i class="sw linea"></i>Según las tendencias</span></div><div class="grafico" id="g-breakeven"></div></div>
+        <div class="card"><div class="tabla-box"><table id="t-breakeven"><thead><tr><th class="l">Par</th><th>Vto</th><th>Días</th><th>TEA fija</th><th>TIR real</th><th>BE mensual</th><th>BE anual</th></tr></thead><tbody></tbody></table></div>
+          <p class="nota" id="n-breakeven"></p></div>
+      </div>
+    </section>
+
+
+   </div>
+
+   <div id="vista-calculadora" class="vista" hidden>
+    <section class="curva" id="calc-sec" hidden>
+      <div class="curva-head"><h2>Calculadora</h2><p>Elegí una especie y escribí un precio para ver su TIR, o una TIR para ver el precio. Usa los mismos flujos y el mismo motor que las curvas.</p></div>
+      <div class="card calc">
+        <div class="calc-form">
+          <label>Especie<select id="c-especie"></select></label>
+          <label>Precio (por 100 VN)<input id="c-precio" type="number" step="any" inputmode="decimal"></label>
+          <label>Liquidación<input id="c-liq" type="date"></label>
+          <label>o TIR objetivo (%)<input id="c-tir" type="number" step="any" inputmode="decimal" placeholder="ej. 12.5"></label>
+        </div>
+        <div class="calc-res" id="c-res" aria-live="polite"></div>
+      </div>
+    </section>
+   </div>
+
+   <div id="vista-historico" class="vista" hidden>
+    <div class="hist-controles">
+      <div class="seg" role="group" aria-label="Escala"><button data-modo="base">Base 100</button><button data-modo="valores">Valores</button><button data-modo="var">Variación %</button></div>
+      <div class="seg" role="group" aria-label="Período"><button data-rango="6">6M</button><button data-rango="12">1A</button><button data-rango="2025">Desde 2025</button></div>
+    </div>
+    <div class="card">
+      <h3 class="card-t">Evolución comparada</h3>
+      <div class="leyenda" id="h-leyenda"></div>
+      <div class="grafico" id="h-graf"></div>
+      <p class="nota" id="h-nota"></p>
+    </div>
+    <div class="curva-grid" style="margin-top:14px">
+      <div class="card"><h3 class="card-t">Brechas: MEP / A3500 y canje AL30D / AL30C</h3><div class="grafico chico" id="h-brecha"></div></div>
+      <div class="card"><h3 class="card-t">Retorno en el período</h3><div class="tabla-box"><table id="h-tabla"><thead><tr><th class="l">Serie</th><th>Desde 2025</th><th>12 meses</th><th>6 meses</th><th>1 mes</th></tr></thead><tbody></tbody></table></div>
+        <p class="nota">Bonares y Globales: retorno total en USD (precio más cupones y amortizaciones cobrados), así los pagos no aparecen como caídas.</p></div>
+    </div>
+    <div class="card" style="margin-top:14px">
+      <h3 class="card-t">Riesgo país desde 2024</h3>
+      <div class="grafico chico" id="h-rp"></div>
+      <p class="nota">Aproximación del EMBI: spread de Globales y Bonares sobre la curva del Tesoro de EE.UU., ponderado por valor de mercado.</p>
+    </div>
+   </div>
+
     <section class="metodo" id="metodo">
       <h2>Cómo se calcula</h2>
       <p>Precios: último cierre de PPI, liquidación T+1 hábil. TIR efectiva anual, base actual/365, desde la liquidación.</p>
       <p>Tasa fija: TEA = (pago final / precio)<sup>365/días</sup> − 1; TEM = (1 + TEA)<sup>1/12</sup> − 1; TNA = TEM × 12.</p>
       <p>CER: VR = 100 × CER (10 días hábiles antes de la liquidación) / CER de emisión; TIR real = (VR / precio)<sup>365/días</sup> − 1. Índice CER del BCRA.</p>
       <p>Hard dollar: TIR que iguala el precio en USD MEP con los flujos futuros. Flujos: repositorio rendimientos-ar.</p>
+      <p>Riesgo país (aproximación del EMBI): spread de cada Global y Bonar del canje 2020 sobre la curva del Tesoro de EE.UU. a su duration (TIR llevada a semestral), promediado por valor de mercado. TAMAR y A3500: BCRA. MEP implícito: AL30 / AL30D.</p>
       <p>Tendencias: y = a + b·ln(x) por mínimos cuadrados, calculadas en el mismo proceso que alimenta el Sheet de control. El motor está validado contra el informe BYMA/IAMC (±5 pb).</p>
       <p class="aviso">Información con fines de análisis. No constituye recomendación de inversión.</p>
     </section>
@@ -44,6 +101,7 @@
   <div class="tip" id="tip" hidden></div>
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.9.0/d3.min.js"></script>
+  <script src="calc.js"></script>
   <script src="app.js"></script>
 </body>
 </html>

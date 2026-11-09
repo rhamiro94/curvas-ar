@@ -32,3 +32,17 @@ def cer_t10(liquidacion: date, feriados=frozenset()):
     if f not in s:
         raise RuntimeError(f"El BCRA no publicó el CER del {f}")
     return f, s[f]
+
+ID_A3500 = 5     # Tipo de cambio mayorista de referencia (Com. A 3500)
+ID_TAMAR = 44    # TAMAR bancos privados, TNA (%)
+
+
+def ultimo_y_previo(id_variable: int, hoy: date, dias_atras: int):
+    """(fecha, valor) del último dato y del último dato en o antes de hoy - dias_atras."""
+    s = serie(id_variable, hoy - timedelta(days=dias_atras + 20), hoy)
+    if not s:
+        return None, None
+    fechas = sorted(s)
+    ult = fechas[-1]
+    ref = [f for f in fechas if f <= hoy - timedelta(days=dias_atras)]
+    return (ult, s[ult]), ((ref[-1], s[ref[-1]]) if ref else None)
