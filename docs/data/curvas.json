@@ -1,5 +1,5 @@
 {
- "generado": "2026-11-09T22:22:19",
+ "generado": "2026-11-09T23:07:42",
  "fecha_precios": "2026-11-06",
  "dias_atras": 7,
  "liquidacion": "2026-11-11",
@@ -31,6 +31,13 @@
    "valor_7d": 1565.2499531922863,
    "fecha_7d": "2026-11-02",
    "metodo": "AL30 / AL30D"
+  },
+  "canje": {
+   "valor": 0.05991735537190079,
+   "fecha": "2026-11-06",
+   "valor_7d": 0.061196105702364445,
+   "fecha_7d": "2026-11-02",
+   "metodo": "AL30D / AL30C - 1"
   },
   "a3500": {
    "valor": 1545.3974,
@@ -125,6 +132,23 @@
   ]
  },
  "calculadora": [
+  {
+   "ticker": "BPD7D",
+   "curva": "Hard dollar",
+   "tipo": "flujos",
+   "precio": 101.65,
+   "flujos": [
+    [
+     "2027-04-30",
+     52.5
+    ],
+    [
+     "2027-11-01",
+     51.25
+    ]
+   ],
+   "tir": 0.029003847457909848
+  },
   {
    "ticker": "AO27D",
    "curva": "Hard dollar",
@@ -434,6 +458,31 @@
     ]
    ],
    "tir": 0.16297749547356288
+  },
+  {
+   "ticker": "BPB8D",
+   "curva": "Hard dollar",
+   "tipo": "flujos",
+   "precio": 84.58,
+   "flujos": [
+    [
+     "2027-04-30",
+     1.5
+    ],
+    [
+     "2027-11-01",
+     1.5
+    ],
+    [
+     "2028-05-02",
+     1.5
+    ],
+    [
+     "2028-10-31",
+     101.5
+    ]
+   ],
+   "tir": 0.12427564232516175
   },
   {
    "ticker": "AO29D",
@@ -2508,7 +2557,7 @@
   {
    "id": "hard-dollar",
    "titulo": "Hard dollar: Bonares y Globales",
-   "descripcion": "TIR contra duration modificada. Precios en USD MEP. Una tendencia por ley.",
+   "descripcion": "TIR contra duration modificada. Precios en USD MEP. Una tendencia por ley (los BOPREAL no tienen tendencia: son dos puntos).",
    "x": {
     "campo": "md",
     "etiqueta": "Duration modificada (años)",
@@ -2562,6 +2611,10 @@
     {
      "id": "NY",
      "etiqueta": "Globales (ley NY)"
+    },
+    {
+     "id": "BCRA",
+     "etiqueta": "BOPREAL (BCRA)"
     }
    ],
    "ajuste_por_grupo": true,
@@ -2659,6 +2712,26 @@
     }
    ],
    "filas": [
+    {
+     "ticker": "BPD7D",
+     "ley": "BCRA",
+     "fecha": "2026-11-06",
+     "precio": 101.65,
+     "tir": 0.029003847457909848,
+     "md": 0.6941558004549703,
+     "duration": 0.7142889894033896,
+     "fecha_7d": "2026-11-02",
+     "precio_7d": 102.8,
+     "tir_7d": 0.012548634576282969,
+     "duration_7d": 0.7372418211923547,
+     "delta_pb": 164.5521288162688,
+     "volumen": 249797.21,
+     "spread_pb": -139.32040661266723,
+     "spread_7d_pb": -306.0731613518906,
+     "cobros_horizonte": 52.5,
+     "caida_eq": -0.5164781111657648,
+     "precio_eq": 49.150000000000006
+    },
     {
      "ticker": "AO27D",
      "ley": "ARG",
@@ -2778,6 +2851,26 @@
      "cobros_horizonte": 4.01,
      "caida_eq": -0.04739952718676123,
      "precio_eq": 80.58999999999999
+    },
+    {
+     "ticker": "BPB8D",
+     "ley": "BCRA",
+     "fecha": "2026-11-06",
+     "precio": 84.58,
+     "tir": 0.12427564232516175,
+     "md": 1.7113528899057269,
+     "duration": 1.924032369543783,
+     "fecha_7d": "2026-11-02",
+     "precio_7d": 89.53,
+     "tir_7d": 0.0904656701865375,
+     "duration_7d": 1.9476080728981577,
+     "delta_pb": 338.09972138624244,
+     "volumen": 100600.17,
+     "spread_pb": 756.7404436359645,
+     "spread_7d_pb": 427.17308345710796,
+     "cobros_horizonte": 1.5,
+     "caida_eq": -0.017734689051785293,
+     "precio_eq": 83.08
     },
     {
      "ticker": "AO29D",
