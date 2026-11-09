@@ -29,7 +29,8 @@ def hard_dollar(cfg, precios, feriados, hoy: date) -> tuple[pd.DataFrame, list]:
             errores.append((tk, "sin precio")); continue
         a = motor.metricas_bono(p, fl, motor.liquidacion(f, feriados))
         b = motor.metricas_bono(p7, fl, motor.liquidacion(f7, feriados)) if p7 else None
-        filas.append({"ticker": tk, "ley": "NY" if base.startswith("GD") else "ARG",
+        ley = "NY" if base.startswith("GD") else "BCRA" if base.startswith("BP") else "ARG"
+        filas.append({"ticker": tk, "ley": ley,
                       "fecha": f, "precio": p, "tir": a["tir"], "md": a["md"], "duration": a["duration"],
                       "fecha_7d": f7, "precio_7d": p7, "tir_7d": b["tir"] if b else None,
                       "duration_7d": b["duration"] if b else None,

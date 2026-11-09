@@ -1,7 +1,7 @@
 /* Terminal de curvas: lee data/curvas.json (lo genera el proceso diario) y dibuja cada curva. */
 (function () {
   const css = (v) => getComputedStyle(document.documentElement).getPropertyValue(v).trim();
-  const COLORES = ["--s1", "--s2"];
+  const COLORES = ["--s1", "--s2", "--s3"];
   const fmt = {
     pct: (v) => (v == null ? "—" : d3.format(".2%")(v)),
     pb: (v) => (v == null ? "—" : d3.format("+.0f")(v)),
@@ -72,6 +72,7 @@
       ["tamar", "TAMAR (TNA)", (v) => d3.format(".2%")(v), "", (a, b) => `${fmt.pb((a - b) * 1e4)} pb`, true],
       ["mep", "Dólar MEP implícito", (v) => "$" + d3.format(",.2f")(v), "", (a, b) => d3.format("+.2%")(a / b - 1), true],
       ["a3500", "A3500 mayorista", (v) => "$" + d3.format(",.2f")(v), "", (a, b) => d3.format("+.2%")(a / b - 1), true],
+      ["canje", "Canje AL30D/AL30C", (v) => d3.format("+.2%")(v), "", (a, b) => `${fmt.pb((a - b) * 1e4)} pb`, true],
     ];
     defs.forEach(([k, titulo, f, unidad, delta, subeEsMalo]) => {
       const v = K[k]; if (!v) return;
@@ -117,7 +118,7 @@
       if (!c.filas.some((r) => r[c.campo_grupo] === g.id)) return;
       const sp = document.createElement("span");
       sp.innerHTML = `<i class="sw"></i>`;
-      sp.querySelector("i").style.background = `var(${COLORES[i % 2]})`;
+      sp.querySelector("i").style.background = `var(${COLORES[i % 3]})`;
       sp.append(g.etiqueta);
       ley.appendChild(sp);
     });
@@ -166,7 +167,7 @@
     const W = Math.max(300, el.clientWidth), H = Math.round(Math.min(420, Math.max(320, W * 0.58)));
     const m = { t: 14, r: 18, b: 42, l: 56 };
     const X = c.x.campo, Y = c.y.campo, YR = c.y_ref, G = c.campo_grupo;
-    const color = (g) => css(COLORES[Math.max(0, c.grupos.findIndex((x) => x.id === g)) % 2]);
+    const color = (g) => css(COLORES[Math.max(0, c.grupos.findIndex((x) => x.id === g)) % 3]);
     const pts = c.filas.filter((r) => r[X] != null && r[Y] != null);
     const ys = pts.flatMap((r) => [r[Y], estado.verRef ? r[YR] : null]).filter((v) => v != null);
     const x = d3.scaleLinear(d3.extent(pts, (r) => r[X]), [m.l, W - m.r]).nice();
@@ -434,12 +435,35 @@
   /* ---------- colchón de precio hard dollar ---------- */
   function tablaColchon(c, datos) {
     const card = document.createElement("div"); card.className = "card extra"; card.id = "colchon";
-    const h = datos.config?.horizonte_colchon;
+    const h = datos.config?.horizonte_colchon, liq = datos.liquidacion;
     card.innerHTML = `<h3 class="card-t">Colchón de precio hasta el ${fmt.fecha(h)}</h3>
-      <p class="nota">Si comprás hoy a precio T+1 y cobrás los cupones y amortizaciones hasta el ${fmt.fecha(h)} (dos cupones semestrales, antes de las elecciones de octubre 2027), cuánto puede caer el precio hasta terminar sin ganar ni perder. Sin reinversión.</p>
-      <div class="tabla-box"><table><thead><tr></tr></thead><tbody></tbody></table></div>`;
-    const cc = { ...c, columnas: c.colchon };
-    tabla(card.querySelector("table"), cc, document.createElement("div"));
+      <p class="nota">Si comprás hoy a precio T+1 y cobrás los cupones y amortizaciones hasta el ${fmt.fecha(h)} (dos cupones semestrales, antes de las elecciones de octubre 2027), cuánto puede caer el precio hasta terminar sin ganar ni perder.</p>
+      <div class="mep-controles">
+        <label>Reinversión de los cobros<select id="col-modo"><option value="no">Sin reinversión</option><option value="tir">A la TIR de cada bono</option><option value="fija">A una tasa fija</option></select></label>
+        <label id="col-tasa-l" hidden>Tasa anual (%)<input type="number" step="0.25" id="col-tasa" value="4"></label>
+      </div>
+      <div class="tabla-box"><table><thead><tr><th>Ticker</th><th>Precio T+1</th><th>TIR</th><th>Cobros</th><th>Cobros + reinversión</th><th>Caída para retorno 0</th><th>Precio de salida de equilibrio</th></tr></thead><tbody></tbody></table></div>
+      <p class="nota">Cobros + reinversión: lo cobrado hasta el horizonte, capitalizado desde cada fecha de pago hasta el ${fmt.fecha(h)}.</p>`;
+    const modo = card.querySelector("#col-modo"), tasa = card.querySelector("#col-tasa"), tasaL = card.querySelector("#col-tasa-l");
+    const flujosDe = Object.fromEntries((datos.calculadora || []).map((b) => [b.ticker, b.flujos]));
+    const dias = (a, b) => (Date.parse(b) - Date.parse(a)) / 86400000;
+    const pintar = () => {
+      tasaL.hidden = modo.value !== "fija";
+      const tb = card.querySelector("tbody"); tb.replaceChildren();
+      [...c.filas].sort((a, b) => a.md - b.md).forEach((r) => {
+        const fl = (flujosDe[r.ticker] || []).filter(([f]) => f > liq && f <= h);
+        const rr = modo.value === "tir" ? r.tir : modo.value === "fija" ? (+tasa.value || 0) / 100 : 0;
+        const nominal = d3.sum(fl, ([, m]) => m);
+        const fv = d3.sum(fl, ([f, m]) => m * Math.pow(1 + rr, Math.max(0, dias(f, h)) / 365));
+        const celdas = [[r.ticker, "tk"], [fmt.num2(r.precio)], [fmt.pct(r.tir)], [fmt.num2(nominal)], [fmt.num2(fv)],
+          [d3.format(".1%")(-fv / r.precio)], [fmt.num2(r.precio - fv)]];
+        const tr = document.createElement("tr");
+        celdas.forEach(([v, cls]) => { const td = document.createElement("td"); td.textContent = v; if (cls) td.className = cls; tr.appendChild(td); });
+        tb.appendChild(tr);
+      });
+    };
+    modo.addEventListener("change", pintar); tasa.addEventListener("input", pintar);
+    pintar();
     return card;
   }
 
@@ -540,7 +564,9 @@
     lineas(document.getElementById("h-graf"), elegidas, { fy, titulo: "Evolución comparada" });
     const mep = Object.fromEntries(S.mep || []), a35 = S.a3500 || [];
     const brecha = a35.filter(([f]) => mep[f] && new Date(f + "T12:00:00") >= desde).map(([f, v]) => [new Date(f + "T12:00:00"), mep[f] / v - 1]);
-    lineas(document.getElementById("h-brecha"), [{ nombre: "Brecha", color: css("--s2"), puntos: brecha }], { fy: d3.format("+.1%"), alto: 240, titulo: "Brecha MEP / A3500" });
+    const canje = (S.canje || []).filter(([f]) => new Date(f + "T12:00:00") >= desde).map(([f, v]) => [new Date(f + "T12:00:00"), v]);
+    lineas(document.getElementById("h-brecha"), [{ nombre: "MEP/A3500", color: css("--s2"), puntos: brecha }, { nombre: "Canje", color: css("--s1"), puntos: canje }],
+      { fy: d3.format("+.1%"), alto: 240, titulo: "Brecha MEP / A3500 y canje AL30D / AL30C" });
     lineas(document.getElementById("h-rp"), [{ nombre: "Riesgo país", color: css("--s1"), puntos: parse(S.riesgo_pais || []) }], { fy: d3.format(",.0f"), alto: 240, titulo: "Riesgo país desde 2024" });
   }
 

@@ -89,6 +89,8 @@ def construir(precios, flujos_cfg: dict, feriados, hoy: date) -> dict:
 
     al30, al30d = ppi("AL30"), ppi("AL30D")
     series["mep"] = {f: al30[f] / al30d[f] for f in al30 if f in al30d}
+    al30c = ppi("AL30C")
+    series["canje"] = {f: al30d[f] / al30c[f] - 1 for f in al30d if f in al30c}
 
     for tk, tipo in MERVAL_CANDIDATOS:
         mv = ppi(tk, tipo)

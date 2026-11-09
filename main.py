@@ -91,7 +91,8 @@ def main():
     if indices:
         c = indices["cer_t10"]
         filas_ind.append(["CER T-10", c["fecha"], c["valor"], c["liquidacion"], hoy.isoformat()])
-    nombres = {"riesgo_pais": "Riesgo país (pb)", "mep": "MEP implícito AL30", "a3500": "A3500", "tamar": "TAMAR TNA"}
+    nombres = {"riesgo_pais": "Riesgo país (pb)", "mep": "MEP implícito AL30", "a3500": "A3500", "tamar": "TAMAR TNA",
+               "canje": "Canje AL30D/AL30C"}
     for k, v in indicadores.items():
         filas_ind.append([nombres.get(k, k), v["fecha"], v["valor"], "", hoy.isoformat()])
         if v.get("valor_7d") is not None:

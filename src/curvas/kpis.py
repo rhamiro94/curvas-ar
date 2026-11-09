@@ -53,6 +53,23 @@ def mep(precios, hoy: date):
     return _par(p_ars / p_usd, r_ars / r_usd if r_ars and r_usd else None, f, f7, metodo="AL30 / AL30D")
 
 
+def canje(precios, hoy: date):
+    """Canje MEP vs cable: AL30D / AL30C - 1."""
+    try:
+        p_mep, f = precios.actual("AL30D", "BONOS")
+        p_ccl, _ = precios.actual("AL30C", "BONOS")
+        ref = hoy - timedelta(days=DIAS_ATRAS)
+        r_mep, f7 = precios.cierre_en("AL30D", "BONOS", ref)
+        r_ccl, _ = precios.cierre_en("AL30C", "BONOS", ref)
+    except Exception as e:
+        print(f"⚠️ Canje: {e}")
+        return None
+    if not p_mep or not p_ccl:
+        return None
+    return _par(p_mep / p_ccl - 1, (r_mep / r_ccl - 1) if r_mep and r_ccl else None, f, f7,
+                metodo="AL30D / AL30C - 1")
+
+
 def bcra_kpi(id_variable: int, hoy: date, metodo: str, escala: float = 1.0):
     try:
         ult, prev = bcra.ultimo_y_previo(id_variable, hoy, DIAS_ATRAS)
@@ -69,6 +86,7 @@ def calcular(precios, df_hd, hoy: date, cache_ust: dict | None = None) -> dict:
     out = {
         "riesgo_pais": riesgo_pais(df_hd, cache_ust),
         "mep": mep(precios, hoy),
+        "canje": canje(precios, hoy),
         "a3500": bcra_kpi(bcra.ID_A3500, hoy, "Tipo de cambio mayorista de referencia (BCRA, Com. A 3500)"),
         "tamar": bcra_kpi(bcra.ID_TAMAR, hoy, "TAMAR bancos privados, TNA (BCRA)", escala=0.01),
     }

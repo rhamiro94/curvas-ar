@@ -8,6 +8,7 @@
   --grid: #edf0f4;
   --s1: #1f5fbf;      /* serie 1 */
   --s2: #c4652a;      /* serie 2 */
+  --s3: #0e8a6a;      /* serie 3 */
   --tend: #16202c;
   --up: #b3261e;      /* tasa sube = precio baja */
   --down: #1d7a46;
@@ -20,7 +21,7 @@
 @media (prefers-color-scheme: dark) {
   :root {
     --bg: #0f141b; --panel: #161d27; --fg: #e6ebf2; --muted: #93a0b2;
-    --line: #263142; --grid: #1d2633; --s1: #6ea1f0; --s2: #e89060;
+    --line: #263142; --grid: #1d2633; --s1: #6ea1f0; --s2: #e89060; --s3: #4cc29a;
     --tend: #e6ebf2; --up: #f08a80; --down: #6fcf97; --chip: #1f2835;
     color-scheme: dark;
   }
@@ -130,3 +131,4 @@ table.mapa td.c { color: #fff; font-weight: 500; }
 .mep-controles { display: flex; flex-wrap: wrap; gap: 12px; align-items: end; margin-bottom: 8px; font-size: .8rem; color: var(--muted); }
 .mep-controles label { display: grid; gap: 3px; }
 .mep-controles input { width: 110px; font: 500 .9rem var(--sans); color: var(--fg); background: var(--bg); border: 1px solid var(--line); border-radius: 6px; padding: 5px 8px; }
+.mep-controles select { font: 500 .9rem var(--sans); color: var(--fg); background: var(--bg); border: 1px solid var(--line); border-radius: 6px; padding: 5px 8px; }

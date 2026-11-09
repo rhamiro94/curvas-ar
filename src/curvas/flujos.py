@@ -25,9 +25,11 @@ def cargar(hoy: date | None = None, url: str = URL_FLUJOS) -> dict:
 
 
 def flujos_soberano(cfg: dict, ticker_base: str):
+    from .config import FLUJOS_EXTRA
     s = cfg["soberanos"].get(ticker_base)
     if not s:
-        return None
+        extra = FLUJOS_EXTRA.get(ticker_base)
+        return [(date.fromisoformat(d), float(m)) for d, m in extra] if extra else None
     return [(date.fromisoformat(f["fecha"]), float(f["monto"])) for f in s["flujos"]]
 
 

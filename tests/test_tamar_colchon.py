@@ -41,3 +41,10 @@ def test_indice_grupo_pondera():
     s = {"A": {date(2025, 1, 2): 1.0, date(2025, 1, 3): 1.1}, "B": {date(2025, 1, 2): 1.0, date(2025, 1, 3): 1.0}}
     idx = _indice_grupo(s, {"A": 3, "B": 1})
     assert abs(idx[date(2025, 1, 3)] - 107.5) < 1e-9
+
+
+def test_bopreal_serie_iv_vs_informe():
+    from curvas.config import FLUJOS_EXTRA
+    fl = [(date.fromisoformat(d), m) for d, m in FLUJOS_EXTRA["BPB8"]]
+    # Informe 05-Oct-26: paridad 89.3, VT 101.3, TIR 9.04%
+    assert abs(motor.tir(89.3 * 101.3 / 100, fl, date(2026, 10, 6)) - 0.0904) < 0.0006

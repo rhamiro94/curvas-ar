@@ -14,7 +14,15 @@ PAUSA_PPI = 0.4  # segundos entre consultas
 
 # Soberanos hard dollar en USD MEP (sufijo D). La base sin "D" es la clave en config.json.
 HARD_DOLLAR = ["AO27D", "AL29D", "GD29D", "AL30D", "GD30D", "AO28D", "AO29D", "AN29D",
-               "AE38D", "GD38D", "AL35D", "GD35D", "AL41D", "GD41D"]
+               "AE38D", "GD38D", "AL35D", "GD35D", "AL41D", "GD41D", "BPD7D", "BPB8D"]
+
+# Flujos por VN 100 USD de especies que no están en el repo de flujos.
+# BOPREAL Serie IV (BPOA8 / BPOB8): 3% anual, cupón semestral 30-abr / 31-oct, amortiza al vencimiento 31-oct-2028
+# (informe BYMA/IAMC 05-Oct-26; verificado: TIR 9,03% vs 9,04% del informe para BPOB8).
+FLUJOS_EXTRA = {
+    "BPB8": [("2026-10-31", 1.5), ("2027-04-30", 1.5), ("2027-11-01", 1.5), ("2028-05-02", 1.5), ("2028-10-31", 101.5)],
+    "BPA8": [("2026-10-31", 1.5), ("2027-04-30", 1.5), ("2027-11-01", 1.5), ("2028-05-02", 1.5), ("2028-10-31", 101.5)],
+}
 
 # LECAP/BONCAP que no están en el repo de flujos (fuente: informe BYMA/IAMC 05-Oct-26)
 LECAP_EXTRA = {"S29E7": {"pago_final": 111.68, "fecha_vencimiento": "2027-01-29"}}
