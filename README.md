@@ -25,9 +25,14 @@ Cada curva se compara con el cierre de hace 7 días.
 
 | Dato | Fuente |
 |---|---|
-| Flujos de fondos y pagos finales | [`config.json` de rendimientos-ar](https://github.com/arisbdar/rendimientos-ar) (se lee en cada corrida y se guarda una copia diaria en `data/flujos/`) |
-| Precios actuales e históricos | API de PPI (`ppi-client`) |
-| Feriados para la liquidación T+1 | API de PPI |
+| Precios actuales e históricos, volumen y feriados | API de PPI (`ppi-client`) |
+| Flujos de fondos y pagos finales | [`config.json` de rendimientos-ar](https://github.com/arisbdar/rendimientos-ar) (copia diaria en `data/flujos/`) |
+| CER, A3500 y TAMAR | API de Estadísticas del BCRA (v4.0) |
+| Curva del Tesoro de EE.UU. | treasury.gov (XML diario) |
+| Riesgo país publicado (control) | ArgentinaDatos |
+| Sheet de control | Google Sheets API (`gspread`) |
+
+Fórmulas, controles y correcciones de flujos: **[METODOLOGIA.md](METODOLOGIA.md)**.
 
 ## Estructura
 
@@ -40,7 +45,8 @@ src/curvas/motor.py      TIR, duration, TNA/TEA/TEM
 src/curvas/curvas.py     arma las tablas de cada curva
 src/curvas/bcra.py       CER, TAMAR y A3500 del BCRA
 src/curvas/ust.py        curva del Tesoro de EE.UU. (treasury.gov)
-src/curvas/kpis.py       riesgo país, MEP, A3500 y TAMAR
+src/curvas/kpis.py       riesgo país, MEP, canje, A3500 y TAMAR
+src/curvas/referencias.py valores publicados por terceros (riesgo país) para control
 src/curvas/historico.py  series históricas y riesgo país diario
 src/curvas/export.py     datos de la terminal (docs/data/curvas.json) y tablas de control
 src/curvas/sheet.py      carga del Google Sheet

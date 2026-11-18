@@ -39,7 +39,8 @@ def test_retorno_total_neutraliza_el_cupon():
 
 def test_indice_grupo_pondera():
     s = {"A": {date(2025, 1, 2): 1.0, date(2025, 1, 3): 1.1}, "B": {date(2025, 1, 2): 1.0, date(2025, 1, 3): 1.0}}
-    idx = _indice_grupo(s, {"A": 3, "B": 1})
+    precios = {"A": {date(2025, 1, 2): 60}, "B": {date(2025, 1, 2): 60}}   # mismo precio: pesa solo el monto
+    idx = _indice_grupo(s, {"A": 3, "B": 1}, precios)
     assert abs(idx[date(2025, 1, 3)] - 107.5) < 1e-9
 
 

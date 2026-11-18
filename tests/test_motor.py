@@ -66,3 +66,19 @@ def test_cer_x30n6_vs_informe():
     assert m["dias"] == 55
     assert abs(m["vr"] - 127.9) < 0.06
     assert abs(m["tir"] - 0.0196) < 0.002
+
+
+def test_gd41_al41_flujos_corregidos_vs_informe():
+    # El repo de flujos trae cupón 3,125%; con las condiciones de emisión (3,5%) la TIR coincide con el informe
+    from curvas.config import FLUJOS_CORREGIDOS
+    fl = _fl(FLUJOS_CORREGIDOS["GD41"])
+    assert abs(motor.tir(69.3 * 100.8 / 100, fl, LIQ) - 0.1075) < 0.0006
+    assert abs(motor.tir(65.3 * 100.8 / 100, fl, LIQ) - 0.1192) < 0.0006
+
+
+def test_flujos_pasados_empalman_con_el_repo():
+    # Los pagos ya hechos siguen el mismo patrón que el primer pago futuro (09-Jul-26)
+    from curvas.flujos import flujos_completos
+    cfg = {"soberanos": {"AL30": {"flujos": [{"fecha": "2026-07-09", "monto": 8.27}]}}}
+    fl = flujos_completos(cfg, "AL30")
+    assert [m for _, m in fl] == [0.375, 4.375, 8.36, 8.33, 8.30, 8.27]

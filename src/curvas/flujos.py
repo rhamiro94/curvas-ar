@@ -25,12 +25,23 @@ def cargar(hoy: date | None = None, url: str = URL_FLUJOS) -> dict:
 
 
 def flujos_soberano(cfg: dict, ticker_base: str):
-    from .config import FLUJOS_EXTRA
+    from .config import FLUJOS_CORREGIDOS, FLUJOS_EXTRA
+    if ticker_base in FLUJOS_CORREGIDOS:
+        return [(date.fromisoformat(d), float(m)) for d, m in FLUJOS_CORREGIDOS[ticker_base]]
     s = cfg["soberanos"].get(ticker_base)
     if not s:
         extra = FLUJOS_EXTRA.get(ticker_base)
         return [(date.fromisoformat(d), float(m)) for d, m in extra] if extra else None
     return [(date.fromisoformat(f["fecha"]), float(f["monto"])) for f in s["flujos"]]
+
+
+def flujos_completos(cfg: dict, ticker_base: str):
+    """Flujos del repo más los pagos ya hechos (FLUJOS_PASADOS), para calcular sobre fechas pasadas."""
+    from .config import FLUJOS_PASADOS
+    fut = flujos_soberano(cfg, ticker_base) or []
+    primero = min((d for d, _ in fut), default=None)
+    pasados = [(date.fromisoformat(d), float(m)) for d, m in FLUJOS_PASADOS.get(ticker_base, [])]
+    return sorted([x for x in pasados if primero is None or x[0] < primero] + fut)
 
 
 def lecaps_vigentes(cfg: dict, hoy: date) -> dict:

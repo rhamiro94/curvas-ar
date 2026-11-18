@@ -28,9 +28,9 @@ CURVAS = {
         "grupos": [{"id": "LECAP", "etiqueta": "LECAP"}, {"id": "BONCAP", "etiqueta": "BONCAP"}],
         "ajuste_por_grupo": False,
         "columnas": [("ticker", "Ticker", "txt"), ("tipo", "Tipo", "txt"), ("vto", "Vto", "fecha"),
-                     ("dias", "Días", "dias"), ("precio", "Precio", "num3"), ("pago_final", "Pago final", "num3"),
+                     ("dias", "Días", "dias"), ("precio", "Precio", "num3"),
                      ("tna", "TNA", "pct"), ("tea", "TEA", "pct"), ("tem", "TEM", "pct"),
-                     ("delta_tem_pb", "Δ TEM pb", "pb"), ("volumen", "Volumen", "vol")],
+                     ("delta_tem_pb", "Δ TEM pb", "pb"), ("volumen", "Volumen", "vol"), ("pago_final", "Pago final", "num3")],
     },
     "tamar": {
         "titulo": "TAMAR: bonos capitalizables",

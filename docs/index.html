@@ -82,7 +82,7 @@
     <div class="card" style="margin-top:14px">
       <h3 class="card-t">Riesgo país desde 2024</h3>
       <div class="grafico chico" id="h-rp"></div>
-      <p class="nota">Aproximación del EMBI: spread de Globales y Bonares sobre la curva del Tesoro de EE.UU., ponderado por valor de mercado.</p>
+      <p class="nota">Calculado: aproximación del EMBI con los Globales en dólar cable, spread sobre la curva del Tesoro de EE.UU., ponderado por valor de mercado. Publicado: EMBI de JP Morgan (vía ArgentinaDatos), para control.</p>
     </div>
    </div>
 
@@ -92,7 +92,7 @@
       <p>Tasa fija: TEA = (pago final / precio)<sup>365/días</sup> − 1; TEM = (1 + TEA)<sup>1/12</sup> − 1; TNA = TEM × 12.</p>
       <p>CER: VR = 100 × CER (10 días hábiles antes de la liquidación) / CER de emisión; TIR real = (VR / precio)<sup>365/días</sup> − 1. Índice CER del BCRA.</p>
       <p>Hard dollar: TIR que iguala el precio en USD MEP con los flujos futuros. Flujos: repositorio rendimientos-ar.</p>
-      <p>Riesgo país (aproximación del EMBI): spread de cada Global y Bonar del canje 2020 sobre la curva del Tesoro de EE.UU. a su duration (TIR llevada a semestral), promediado por valor de mercado. TAMAR y A3500: BCRA. MEP implícito: AL30 / AL30D.</p>
+      <p>Riesgo país (aproximación del EMBI): spread de cada Global (GD29 a GD41, precio en dólar cable) sobre la curva del Tesoro de EE.UU. a su duration (TIR llevada a semestral), promediado por valor de mercado. Se muestra al lado el valor publicado de JP Morgan para control. La columna "Spread UST" de la tabla hard dollar usa el precio MEP de cada bono. TAMAR y A3500: BCRA. MEP implícito: AL30 / AL30D. Detalle completo en METODOLOGIA.md del repositorio.</p>
       <p>Tendencias: y = a + b·ln(x) por mínimos cuadrados, calculadas en el mismo proceso que alimenta el Sheet de control. El motor está validado contra el informe BYMA/IAMC (±5 pb).</p>
       <p class="aviso">Información con fines de análisis. No constituye recomendación de inversión.</p>
     </section>

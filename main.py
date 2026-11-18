@@ -55,7 +55,7 @@ def main():
     for nombre, df in (("hard_dollar", df_hd), ("lecap", df_lc), ("cer", df_cer), ("tamar", df_tm)):
         if df is not None and not df.empty:
             df.to_csv(DIR_RESULTADOS / f"{nombre}_{fecha}.csv", index=False)
-    indicadores = kpis.calcular(precios, df_hd, hoy)
+    indicadores = kpis.calcular(precios, df_hd, hoy, cfg, feriados)
     datos = export.armar({"hard-dollar": df_hd, "tasa-fija": df_lc, "tamar": df_tm, "cer": df_cer}, fecha, indices,
                          indicadores, cfg, liquidacion(fecha, feriados))
     export.guardar(datos, DIR_DOCS / "data" / "curvas.json")
@@ -75,6 +75,10 @@ def main():
     print(f"✅ Curvas del {fecha}: " + ", ".join(f"{c['id']} ({len(c['filas'])})" for c in datos["curvas"]))
     for k, v in indicadores.items():
         print(f"   {k}: {v['valor']:.4f} (hace {datos['dias_atras']}d: {v['valor_7d']})")
+    rp = indicadores.get("riesgo_pais", {}).get("publicado")
+    if rp:
+        dif = rp.get("diferencia_pb")
+        print(f"   riesgo país publicado: {rp['valor']:.0f} ({rp['fecha']})" + (f", diferencia {dif:+.0f} pb" if dif is not None else ""))
 
     # Google Sheet (solo si hay credenciales de Google)
     libro = sheet.conectar_sheet()
@@ -95,6 +99,9 @@ def main():
                "canje": "Canje AL30D/AL30C"}
     for k, v in indicadores.items():
         filas_ind.append([nombres.get(k, k), v["fecha"], v["valor"], "", hoy.isoformat()])
+        if v.get("publicado"):
+            pub = v["publicado"]
+            filas_ind.append([f"{nombres.get(k, k)} publicado", pub["fecha"], pub["valor"], pub.get("fuente", ""), hoy.isoformat()])
         if v.get("valor_7d") is not None:
             filas_ind.append([f"{nombres.get(k, k)} hace {datos['dias_atras']}d", v["fecha_7d"], v["valor_7d"], "", hoy.isoformat()])
     if filas_ind:

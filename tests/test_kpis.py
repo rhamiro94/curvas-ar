@@ -17,15 +17,23 @@ def test_interpolacion_ust():
 
 
 def test_riesgo_pais_rango_informe():
-    # (TIR, duration Macaulay ~ MD x (1+TIR), monto USD M, precio USD) del informe 05-Oct-26
+    # Globales (TIR, duration Macaulay ~ MD x (1+TIR), monto USD M, precio USD) del informe 05-Oct-26
     bonos = {"GD29": (.0624, 1.49, 2635, 55.8), "GD30": (.0767, 1.94, 13587, 57.0),
              "GD38": (.1054, 4.53, 11405, 79.4), "GD35": (.1069, 5.31, 20502, 75.2),
-             "GD41": (.1075, 5.76, 10482, 69.9), "AL29": (.0811, 1.51, 1395, 54.4),
-             "AL30": (.0916, 1.86, 13103, 55.6), "AE38": (.1235, 4.38, 10063, 73.9),
-             "AL35": (.1196, 5.26, 15854, 70.8)}
+             "GD41": (.1075, 5.76, 10482, 69.9)}
     rp = motor.riesgo_pais([(motor.spread_ust(t, d, UST_05OCT), m, p) for t, d, m, p in bonos.values()])
     # El EMBI publicado rondaba los 489 pb: la aproximación tiene que quedar cerca
     assert 440 < rp < 540
+
+
+def test_indice_grupo_pondera_por_valor_de_mercado():
+    from datetime import date
+    from curvas.historico import _indice_grupo
+    d0, d1 = date(2026, 1, 2), date(2026, 1, 5)
+    # A sube 10% y B no cambia. A vale 2 x 50 = 100 y B 1 x 100 = 100 -> mismo peso -> +5%
+    idx = _indice_grupo({"A": {d0: 1.0, d1: 1.1}, "B": {d0: 1.0, d1: 1.0}},
+                        {"A": 2, "B": 1}, {"A": {d0: 50, d1: 55}, "B": {d0: 100, d1: 100}})
+    assert abs(idx[d1] - 105) < 1e-9
 
 
 def test_breakeven():

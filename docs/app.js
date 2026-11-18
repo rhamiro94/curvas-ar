@@ -86,7 +86,13 @@
         td.textContent = `${delta(v.valor, v.valor_7d)} en ${datos.dias_atras} días`;
         td.classList.add((v.valor > v.valor_7d) === subeEsMalo ? "up" : "down");
       }
-      t.querySelector(".tile-s").textContent = v.fecha ? `Dato del ${fmt.fecha(v.fecha)}` : "";
+      let sub = v.fecha ? `Dato del ${fmt.fecha(v.fecha)}` : "";
+      if (v.publicado) {
+        const dif = v.publicado.diferencia_pb;
+        sub += ` · Publicado ${d3.format(",.0f")(v.publicado.valor)}` + (dif != null ? ` (dif. ${fmt.pb(dif)})` : ` (${fmt.fecha(v.publicado.fecha)})`);
+        t.title += `\nPublicado: ${v.publicado.fuente || ""}`;
+      }
+      t.querySelector(".tile-s").textContent = sub;
       box.appendChild(t);
     });
   }
@@ -567,7 +573,10 @@
     const canje = (S.canje || []).filter(([f]) => new Date(f + "T12:00:00") >= desde).map(([f, v]) => [new Date(f + "T12:00:00"), v]);
     lineas(document.getElementById("h-brecha"), [{ nombre: "MEP/A3500", color: css("--s2"), puntos: brecha }, { nombre: "Canje", color: css("--s1"), puntos: canje }],
       { fy: d3.format("+.1%"), alto: 240, titulo: "Brecha MEP / A3500 y canje AL30D / AL30C" });
-    lineas(document.getElementById("h-rp"), [{ nombre: "Riesgo país", color: css("--s1"), puntos: parse(S.riesgo_pais || []) }], { fy: d3.format(",.0f"), alto: 240, titulo: "Riesgo país desde 2024" });
+    lineas(document.getElementById("h-rp"), [
+      { nombre: "Calculado", color: css("--s1"), puntos: parse(S.riesgo_pais || []) },
+      { nombre: "Publicado", color: css("--s2"), puntos: parse(S.riesgo_pais_publicado || []) },
+    ], { fy: d3.format(",.0f"), alto: 240, titulo: "Riesgo país desde 2024: calculado y publicado" });
   }
 
   function tablaRetornos() {
